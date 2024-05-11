@@ -32,7 +32,6 @@ test.only('Positions counter shows Placed Order ', async ({ page }) => {
   await test.step('Open "New Market Order" dialog window', async () => {
     //places pending order if market is closed
     await tradeDialog.forcePlaceOrder();
-    // await tradeDialog.assertOrderWasPlaced();
     await tradeDialog.dialogClose();
   })
 
