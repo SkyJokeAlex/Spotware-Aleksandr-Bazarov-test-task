@@ -5,7 +5,7 @@ import { TradeDialog } from '../PageObject/Pages/Dialogs/TradeDialog';
 import { TradeWatchPanel } from '../PageObject/Pages/Panels/TradeWatchPanel';
 
 
-test.only('Positions counter shows Placed Order ', async ({ page }) => {
+test('Positions counter shows Placed Order ', async ({ page }) => {
   const ctraderPage = new BaseCtraderPage(page);
   const logInDialog = new LogInDialog(page);
   const tradeDialog = new TradeDialog(page);
