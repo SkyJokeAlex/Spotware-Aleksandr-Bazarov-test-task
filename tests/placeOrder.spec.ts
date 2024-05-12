@@ -13,7 +13,7 @@ test.afterEach(async ({ page }) => {
     console.log(`Did not run as expected, ended up at ${page.url()}`);
 });
 
-test('Positions counter increments after order was placed', async ({ page }) => {
+test('Positions counter increments after order was placed (if market is closed, then pending order is placed)', async ({ page }) => {
   const ctraderPage = new BaseCtraderPage(page);
   const logInDialog = new LogInDialog(page);
   const tradeDialog = new TradeDialog(page);
