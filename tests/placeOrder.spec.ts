@@ -3,7 +3,15 @@ import { BaseCtraderPage } from '../PageObject/Pages/BaseCtraderPage';
 import { LogInDialog } from '../PageObject/Pages/Dialogs/LogInDialog';
 import { TradeDialog } from '../PageObject/Pages/Dialogs/TradeDialog';
 import { TradeWatchPanel } from '../PageObject/Pages/Panels/TradeWatchPanel';
+import { CloseAllOrdersDialog } from '../PageObject/Pages/Dialogs/CloseAllOrdersDialog';
 
+
+test.afterEach(async ({ page }) => {
+  console.log(`Finished ${test.info().title} with status ${test.info().status}`);
+
+  if (test.info().status !== test.info().expectedStatus)
+    console.log(`Did not run as expected, ended up at ${page.url()}`);
+});
 
 test('Positions counter increments after order was placed', async ({ page }) => {
   const ctraderPage = new BaseCtraderPage(page);
@@ -44,6 +52,19 @@ test('Positions counter increments after order was placed', async ({ page }) => 
     
     if (isOrderPlacedWhenMarketIsOpened === false) {
       await tradeWatchPanel.assertOrdersCounter(1);
+    }
+  })
+
+  await test.step('Test CleanUp', async () => {
+    if (isOrderPlacedWhenMarketIsOpened === false) {
+      await tradeWatchPanel.switchToOrdersTab();
+      await tradeWatchPanel.cancelAllInOrdersTab();
+
+      const closeAllOrdersDialog = new CloseAllOrdersDialog(page);
+
+      await closeAllOrdersDialog.clickYesButton();
+      
+      await tradeWatchPanel.assertOrdersCounter(0);
     }
   })
 });
