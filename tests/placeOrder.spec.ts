@@ -37,7 +37,7 @@ test('Positions counter increments after order was placed', async ({ page }) => 
     return wasMarketOpened
   })
 
-  await test.step('Checks Positions counter equals 1', async () => {
+  await test.step('Checks Positions counter equals 1 (and Orders counter if market is closed)', async () => {
     await tradeWatchPanel.assertPositionsCounter(1);
     
     if (isOrderPlacedWhenMarketIsOpened === false) {
