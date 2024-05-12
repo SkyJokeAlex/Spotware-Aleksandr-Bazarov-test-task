@@ -29,13 +29,13 @@ test('Positions counter increments after order was placed', async ({ page }) => 
     await tradeDialog.assertDialogIsOpened();
   })
 
-  await test.step('Open "New Market Order" dialog window', async () => {
+  await test.step('Place an order', async () => {
     //places pending order if market is closed
     await tradeDialog.forcePlaceOrder();
     await tradeDialog.dialogClose();
   })
 
-  await test.step('Checks ', async () => {
+  await test.step('Checks Positions counter equals 1', async () => {
     await tradeWatchPanel.assertPositionsCounter(1);
   })
 });
