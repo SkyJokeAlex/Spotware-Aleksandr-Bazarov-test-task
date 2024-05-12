@@ -37,7 +37,7 @@ test('Positions counter increments after order was placed', async ({ page }) => 
     await tradeDialog.assertDialogIsOpened();
   })
 
-  const isOrderPlacedWhenMarketIsOpened = await test.step('Place an order', async () => {
+  const isOrderPlacedWhenMarketIsOpened = await test.step('Place an order (the pending one if the market is closed)', async () => {
     //places pending order if market is closed
     const wasMarketOpened = await tradeDialog.forcePlaceOrder();
     

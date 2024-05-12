@@ -12,7 +12,5 @@ export class CloseAllOrdersDialog extends BaseDialog {
             this.page.getByTestId('submit'),
             'Assert "Yes" button in "Close All Orders" dialog is visible'
         )
-        //Playwright acts too fast for this page
-        await this.page.waitForTimeout(2000);
     }
 }
