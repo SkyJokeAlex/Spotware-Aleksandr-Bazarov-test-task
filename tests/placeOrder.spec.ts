@@ -9,7 +9,7 @@ test('Positions counter increments after order was placed', async ({ page }) => 
   const ctraderPage = new BaseCtraderPage(page);
   const logInDialog = new LogInDialog(page);
   const tradeDialog = new TradeDialog(page);
-  const tradeWatchPanel = new TradeWatchPanel(page);
+  const tradeWatchPanel = new TradeWatchPanel(page);  
 
   await test.step('Open starting page and login', async () => {
     await ctraderPage.go();
@@ -32,7 +32,9 @@ test('Positions counter increments after order was placed', async ({ page }) => 
   const isOrderPlacedWhenMarketIsOpened = await test.step('Place an order', async () => {
     //places pending order if market is closed
     const wasMarketOpened = await tradeDialog.forcePlaceOrder();
-    await tradeDialog.dialogClose();
+    
+    await tradeDialog.assertOrderWasPlaced();
+    await tradeDialog.dialogCloseViaOkButton();
 
     return wasMarketOpened
   })

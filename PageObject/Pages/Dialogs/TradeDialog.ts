@@ -62,6 +62,10 @@ export class TradeDialog extends BaseDialog {
         if (await this.assertMarketIsClosed()) {
             await this.clickMarketIsClosedControl()
             await this.assertLimitOrderTabIsActive();
+
+            //Playwright acts too fast for this page
+            await this.page.waitForTimeout(1000);
+
             await this.clickPlaceOrderOnLimitOrderTabButton();
 
             isOrderPlacedWhenMarketIsOpened = false
@@ -72,10 +76,21 @@ export class TradeDialog extends BaseDialog {
             isOrderPlacedWhenMarketIsOpened = true
         }
 
+
         return isOrderPlacedWhenMarketIsOpened
     }
 
     public async assertOrderWasPlaced () {
         await expect(this.page.getByTestId('thank-you-form'), `Assert order was successfully placed`).toBeVisible(); 
+    }
+
+    public async dialogCloseViaOkButton() {
+        return test.step('Close dialog window via "Ok" button', async () => {
+            await assertVisibleAndClick(
+                this.page.getByTestId('ok-button'),
+                'Assert dialog "Ok" button is visible',
+                {visibleOptions: {timeout: 10_000}},
+            )
+        })
     }
 }

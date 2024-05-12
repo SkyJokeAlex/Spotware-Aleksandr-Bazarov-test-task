@@ -15,7 +15,7 @@ export class BaseCtraderPage extends BasePageElement {
             await assertVisibleAndClick(
                 this.page.getByTestId('log-in'),
                 'Assert "Log in" button is visible',
-                {visibleOptions: {timeout: 10_000}} ,
+                {visibleOptions: {timeout: 10_000}},
             )
         });
     }
