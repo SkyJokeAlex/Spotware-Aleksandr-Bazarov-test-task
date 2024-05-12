@@ -21,7 +21,7 @@ test('Positions counter increments after order was placed', async ({ page }) => 
     await logInDialog.fillPassword('userForTest@spotware.com');
     await logInDialog.clickLoginDialogButton();
 
-    await ctraderPage.assertUserIsLogedIn();
+    await ctraderPage.assertUserIsLoggedIn();
   })
 
   await test.step('Open "New Market Order" dialog window', async () => {
@@ -29,14 +29,20 @@ test('Positions counter increments after order was placed', async ({ page }) => 
     await tradeDialog.assertDialogIsOpened();
   })
 
-  await test.step('Place an order', async () => {
+  const isOrderPlacedWhenMarketIsOpened = await test.step('Place an order', async () => {
     //places pending order if market is closed
-    await tradeDialog.forcePlaceOrder();
+    const wasMarketOpened = await tradeDialog.forcePlaceOrder();
     await tradeDialog.dialogClose();
+
+    return wasMarketOpened
   })
 
   await test.step('Checks Positions counter equals 1', async () => {
     await tradeWatchPanel.assertPositionsCounter(1);
+    
+    if (isOrderPlacedWhenMarketIsOpened === false) {
+      await tradeWatchPanel.assertOrdersCounter(1);
+    }
   })
 });
 

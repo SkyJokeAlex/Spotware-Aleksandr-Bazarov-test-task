@@ -20,6 +20,13 @@ export class TradeDialog extends BaseDialog {
         )
     }
 
+    public async switchToMarketOrderTab () {
+        await assertVisibleAndClick(
+            this.page.getByTestId('market-order'),
+            'Assert "Market Order" tab is visible'
+        )
+    }
+
     private async assertMarketOrderTabIsActive () {
         await expect(this.page.getByTestId('market-order'), `Assert "Market Order" tab is active`).toHaveAttribute('data-test-checked', 'true');
     }
@@ -30,15 +37,15 @@ export class TradeDialog extends BaseDialog {
 
     public async clickPlaceOrderOnMarketOrderTabButton () {
         await assertVisibleAndClick(
-            this.page.getByTestId('limit-order-submit-control'),
-            'Assert "Market is closed" control is visible'
+            this.page.getByTestId('new-position-submit-control'),
+            'Assert "Place Order" button on Market Order tab is visible'
         )
     }
 
     public async clickPlaceOrderOnLimitOrderTabButton () {
         await assertVisibleAndClick(
             this.page.getByTestId('limit-order-submit-control'),
-            'Assert "Market is closed" control is visible'
+            'Assert "Place Order" button on Limit Order tab is visible'
         )
     }
 
@@ -47,18 +54,27 @@ export class TradeDialog extends BaseDialog {
      * IF the market is closed, then swtiches to pending orders and click Place Order from there
      */
     public async forcePlaceOrder () {
-        return test.step('Click "Log In" button', async () => {
+        // await test.step('Place an Order (if market is closed, then switches tab and places pending order)', async () => {
+            await this.switchToMarketOrderTab();
             await this.assertMarketOrderTabIsActive();
+
+            let isOrderPlacedWhenMarketIsOpened: boolean
 
             if (await this.assertMarketIsClosed()) {
                 await this.clickMarketIsClosedControl()
                 await this.assertLimitOrderTabIsActive();
                 await this.clickPlaceOrderOnLimitOrderTabButton();
+
+                isOrderPlacedWhenMarketIsOpened = false
             }
             else {
                 await this.clickPlaceOrderOnMarketOrderTabButton();
+
+                isOrderPlacedWhenMarketIsOpened = true
             }
-        });
+
+            return isOrderPlacedWhenMarketIsOpened
+        // });
     }
 
     public async assertOrderWasPlaced () {

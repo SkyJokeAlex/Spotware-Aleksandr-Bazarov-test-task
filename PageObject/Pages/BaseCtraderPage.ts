@@ -14,13 +14,14 @@ export class BaseCtraderPage extends BasePageElement {
         return test.step('Click "Log In" button', async () => {
             await assertVisibleAndClick(
                 this.page.getByTestId('log-in'),
-                'Assert "Log in" button is visible'
+                'Assert "Log in" button is visible',
+                {visibleOptions: {timeout: 10_000}} ,
             )
         });
     }
 
-    public async assertUserIsLogedIn () {
-        return test.step('Click "Log In" button', async () => {
+    public async assertUserIsLoggedIn () {
+        return test.step('Assert User is Logged In by acount control menu visibility', async () => {
             await expect(this.page.getByTestId('account-control'), `Assert account-control menu is visible`).toBeVisible()
         });
     }

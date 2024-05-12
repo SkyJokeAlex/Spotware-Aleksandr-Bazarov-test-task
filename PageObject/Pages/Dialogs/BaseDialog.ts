@@ -18,13 +18,13 @@ export class BaseDialog extends BasePageElement {
     }
 
     public async assertDialogIsOpened(timeout?: number) {
-        await expect(this.dialog, `Assert dialog ${this.dataTestId} is opened`).toBeVisible(
+        await expect(this.dialog, `Assert ${this.dataTestId} is opened`).toBeVisible(
             timeout ? { timeout } : undefined,
         );
     }
 
     public async dialogClose() {
-        return test.step('Click "Log In" button', async () => {
+        return test.step('Close dialog window', async () => {
             await assertVisibleAndClick(
                 this.page.getByTestId('dialog-header-close'),
                 'Assert dialog close button is visible'

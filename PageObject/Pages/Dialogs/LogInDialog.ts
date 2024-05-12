@@ -46,10 +46,10 @@ export class LogInDialog extends BaseDialog {
     }
 
     public async clickLoginTabButton () {
-        return test.step('Click "Log In" button in dialog window', async () => {
+        return test.step('Switch to "Log In" tab in dialog window', async () => {
             await assertVisibleAndClick(
                 this.page.getByTestId('signin-tab'),
-                'Assert "Log in" button in dialog is visible'
+                'Assert "Log in" tab in dialog is visible'
             )
         });
     }
