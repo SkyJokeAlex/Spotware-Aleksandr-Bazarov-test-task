@@ -6,13 +6,6 @@ import { TradeWatchPanel } from '../PageObject/Pages/Panels/TradeWatchPanel';
 import { CloseAllOrdersDialog } from '../PageObject/Pages/Dialogs/CloseAllOrdersDialog';
 
 
-test.afterEach(async ({ page }) => {
-  console.log(`Finished ${test.info().title} with status ${test.info().status}`);
-
-  if (test.info().status !== test.info().expectedStatus)
-    console.log(`Did not run as expected, ended up at ${page.url()}`);
-});
-
 test('Positions counter increments after order was placed (if market is closed, then pending order is placed)', async ({ page }) => {
   const ctraderPage = new BaseCtraderPage(page);
   const logInDialog = new LogInDialog(page);
