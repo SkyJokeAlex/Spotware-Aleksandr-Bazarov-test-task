@@ -54,27 +54,25 @@ export class TradeDialog extends BaseDialog {
      * IF the market is closed, then swtiches to pending orders and click Place Order from there
      */
     public async forcePlaceOrder () {
-        // await test.step('Place an Order (if market is closed, then switches tab and places pending order)', async () => {
-            await this.switchToMarketOrderTab();
-            await this.assertMarketOrderTabIsActive();
+        await this.switchToMarketOrderTab();
+        await this.assertMarketOrderTabIsActive();
 
-            let isOrderPlacedWhenMarketIsOpened: boolean
+        let isOrderPlacedWhenMarketIsOpened: boolean
 
-            if (await this.assertMarketIsClosed()) {
-                await this.clickMarketIsClosedControl()
-                await this.assertLimitOrderTabIsActive();
-                await this.clickPlaceOrderOnLimitOrderTabButton();
+        if (await this.assertMarketIsClosed()) {
+            await this.clickMarketIsClosedControl()
+            await this.assertLimitOrderTabIsActive();
+            await this.clickPlaceOrderOnLimitOrderTabButton();
 
-                isOrderPlacedWhenMarketIsOpened = false
-            }
-            else {
-                await this.clickPlaceOrderOnMarketOrderTabButton();
+            isOrderPlacedWhenMarketIsOpened = false
+        }
+        else {
+            await this.clickPlaceOrderOnMarketOrderTabButton();
 
-                isOrderPlacedWhenMarketIsOpened = true
-            }
+            isOrderPlacedWhenMarketIsOpened = true
+        }
 
-            return isOrderPlacedWhenMarketIsOpened
-        // });
+        return isOrderPlacedWhenMarketIsOpened
     }
 
     public async assertOrderWasPlaced () {
